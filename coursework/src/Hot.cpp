@@ -38,20 +38,20 @@ bool Hot::get_readiness()
 void Hot::save(std::ofstream &fout)
 {
     Drink::save(fout);
-    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
-    fout.write(reinterpret_cast<char *>(&readiness), sizeof(readiness));
+    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
+    fout.write(reinterpret_cast<char *>(&readiness), sizeof(bool));
 }
 
 void Hot::load(std::ifstream &fin)
 {
     Drink::load(fin);
-    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
-    fin.read(reinterpret_cast<char *>(&readiness), sizeof(readiness));
+    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
+    fin.read(reinterpret_cast<char *>(&readiness), sizeof(bool));
 }
 
 void Hot::print(std::ostream& ostream) const {
     Drink::print(ostream);
     ostream << "subtype Hot" << std::endl
-    << "    degree of taste=" << degree_of_taste << std::endl
-    << "    ,readiness=" << readiness << std::endl;
+    << "\tdegree of taste=" << degree_of_taste << std::endl
+    << "\treadiness=" << readiness << std::endl;
 }

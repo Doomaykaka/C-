@@ -39,20 +39,33 @@ bool Coffee::get_is_cooking_method_traditional()
 
 void Coffee::save(std::ofstream& fout) {
     Hot::save(fout);
-    fout.write(reinterpret_cast<char*>(&advantages), sizeof(advantages));
-    fout.write(reinterpret_cast<char*>(&is_cooking_method_traditional), sizeof(is_cooking_method_traditional));
+
+    size_t advantages_str_size = advantages.size() - 1;
+    const char* advantages_c_str = advantages.c_str();
+
+    fout.write(reinterpret_cast<char*>(&advantages_str_size), sizeof(size_t));
+    fout.write(const_cast<char*>(advantages_c_str), advantages_str_size);
+    fout.write(reinterpret_cast<char*>(&is_cooking_method_traditional), sizeof(bool));
 }
 
 
 void Coffee::load(std::ifstream& fin) {
     Hot::load(fin);
-    fin.read(reinterpret_cast<char*>(&advantages), sizeof(advantages));
-    fin.read(reinterpret_cast<char*>(&is_cooking_method_traditional), sizeof(is_cooking_method_traditional));
+
+    size_t advantages_str_size = 0;
+
+    fin.read(reinterpret_cast<char*>(&advantages_str_size), sizeof(size_t));
+    const char* advantages_c_str = new char[advantages_str_size];
+    fin.read(const_cast<char*>(advantages_c_str), advantages_str_size);
+    advantages = string(advantages_c_str);
+    delete[] advantages_c_str;
+
+    fin.read(reinterpret_cast<char*>(&is_cooking_method_traditional), sizeof(bool));
 }
 
 void Coffee::print(std::ostream& ostream) const {
     Hot::print(ostream);
     ostream << "subtype Coffee" << std::endl
-    << "    advantages=" << advantages << std::endl
-    << "    ,is cooking method traditional=" << is_cooking_method_traditional << std::endl;
+    << "\tadvantages=" << advantages << std::endl
+    << "\tis cooking method traditional=" << is_cooking_method_traditional << std::endl;
 }

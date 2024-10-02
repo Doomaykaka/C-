@@ -29,17 +29,17 @@ int Lemonade::get_degree_of_taste()
 void Lemonade::save(std::ofstream &fout)
 {
     Cold::save(fout);
-    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
+    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
 }
 
 void Lemonade::load(std::ifstream &fin)
 {
     Cold::load(fin);
-    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
+    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
 }
 
 void Lemonade::print(std::ostream& ostream) const {
     Cold::print(ostream);
     ostream << "subtype Lemonade" << std::endl
-    << "    degree of taste=" << degree_of_taste << std::endl;
+    << "\tdegree of taste=" << degree_of_taste << std::endl;
 }

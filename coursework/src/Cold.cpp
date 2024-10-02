@@ -27,17 +27,17 @@ bool Cold::get_readiness()
 
 void Cold::save(std::ofstream& fout) {
     Drink::save(fout);
-    fout.write(reinterpret_cast<char*>(&readiness), sizeof(readiness));
+    fout.write(reinterpret_cast<char*>(&readiness), sizeof(bool));
 }
 
 
 void Cold::load(std::ifstream& fin) {
     Drink::load(fin);
-    fin.read(reinterpret_cast<char*>(&readiness), sizeof(readiness));
+    fin.read(reinterpret_cast<char*>(&readiness), sizeof(bool));
 }
 
 void Cold::print(std::ostream& ostream) const {
     Drink::print(ostream);
     ostream << "subtype Cold" << std::endl
-    << "    readiness=" << readiness << std::endl;
+    << "\treadiness=" << readiness << std::endl;
 }

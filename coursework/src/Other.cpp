@@ -28,17 +28,17 @@ int Other::get_degree_of_taste()
 void Other::save(std::ofstream &fout)
 {
     Drink::save(fout);
-    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
+    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
 }
 
 void Other::load(std::ifstream &fin)
 {
     Drink::load(fin);
-    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
+    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
 }
 
 void Other::print(std::ostream& ostream) const {
     Drink::print(ostream);
     ostream << "subtype Other" << std::endl
-    << "    degree of taste=" << degree_of_taste << std::endl;
+    << "\tdegree of taste=" << degree_of_taste << std::endl;
 }

@@ -5,7 +5,7 @@ SOURCE_FOLDER = src
 DISTRIBUTION_FOLDER = dist
 TARGET = Coursework
 
-run: build
+run:
 	./${DISTRIBUTION_FOLDER}/${TARGET}
 
 build: clean

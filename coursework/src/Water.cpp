@@ -30,18 +30,18 @@ int Water::get_color()
 void Water::save(std::ofstream &fout)
 {
      Cold::save(fout);
-     fout.write(reinterpret_cast<char *>(&color), sizeof(color));
+     fout.write(reinterpret_cast<char *>(&color), sizeof(int));
 }
 
 void Water::load(std::ifstream &fin)
 {
      Cold::load(fin);
-     fin.read(reinterpret_cast<char *>(&color), sizeof(color));
+     fin.read(reinterpret_cast<char *>(&color), sizeof(int));
 }
 
 void Water::print(std::ostream &ostream) const
 {
      Cold::print(ostream);
      ostream << "subtype Water" << std::endl
-             << "   color=" << color << std::endl;
+             << "\tcolor=" << color << std::endl;
 }

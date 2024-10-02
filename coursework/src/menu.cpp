@@ -22,15 +22,15 @@ List<Drink> list;
 
 void help(string line) {
     std::cout
-        << "help -- Prints the Help Message" << std::endl
-        << "exit -- Exit" << std::endl
-        << "load <filename> -- Loads objects from <filename> into the Drink" << std::endl
-        << "save <filename> -- Saves the Drink in <filename>" << std::endl
-        << "print -- Prints the Drink" << std::endl
-        << "len -- Prints Drink length" << std::endl
-        << "remove <name> -- Removes all occurrences of <name>" << std::endl
-        << "search <name> -- Prints first occurrence of <name>" << std::endl
-        << "add -- Adds a new object to the Drink" << std::endl;
+        << "🆘 help ................ Prints the Help Message" << std::endl
+        << "📴 exit ................ Exit" << std::endl
+        << "🔼 load ... <filename> . Loads objects from <filename> into the Drink" << std::endl
+        << "🔽 save ... <filename> . Saves the Drink in <filename>" << std::endl
+        << "🖨️ print ............... Prints the Drink" << std::endl
+        << "📏 len ................. Prints Drink length" << std::endl
+        << "🗑️ remove . <name> ..... Removes all occurrences of <name>" << std::endl
+        << "🔍 search . <name> ..... Prints first occurrence of <name>" << std::endl
+        << "➕ add ................. Adds a new object to the Drink" << std::endl;
 }
 
 
@@ -109,9 +109,10 @@ void add(string line) {
     string dishes;
     string name;
 
-    char classname[MAX_STRING_LENGTH] = {};
+    std::string classname;
     std::cout << "Classname (Drink, Hot, Coffee, Tea, Cold, Lemonade, Water, Other): ";
-    std::cin.getline(classname, MAX_STRING_LENGTH);
+    std::cin >> classname;
+
     std::cout << "name: ";
     std::cin >> name;
     std::cout << "drinking time: ";
@@ -119,7 +120,7 @@ void add(string line) {
     std::cout << "dishes: ";
     std::cin >> dishes;
 
-    if(std::strcmp(classname, "Drink") == 0) {
+    if (classname == "Drink") {
         Drink* drink = new Drink();
 
         drink->set_name(name);
@@ -127,7 +128,7 @@ void add(string line) {
         drink->set_drinking_time(drinking_time);
 
         list.append(drink);
-    } else if (std::strcmp(classname, "Hot") == 0) {
+    } else if (classname == "Hot") {
         int degree_of_taste;
         bool readiness;
 
@@ -145,7 +146,7 @@ void add(string line) {
         hot->set_readiness(readiness);
 
         list.append(hot);
-    } else if (std::strcmp(classname, "Coffee") == 0) {
+    } else if (classname == "Coffee") {
         string advantages;
         bool is_cooking_method_traditional;
         int degree_of_taste;
@@ -171,7 +172,7 @@ void add(string line) {
         coffee->set_is_cooking_method_traditional(is_cooking_method_traditional);
 
         list.append(coffee);
-    } else if (std::strcmp(classname, "Tea") == 0) {
+    } else if (classname == "Tea") {
         int degree_of_taste;
         bool readiness;
         string advantages;
@@ -197,7 +198,7 @@ void add(string line) {
         tea->set_is_cooking_method_traditional(is_cooking_method_traditional);
 
         list.append(tea);
-    } else if (std::strcmp(classname, "Cold") == 0) {
+    } else if (classname == "Cold") {
         bool readiness;
 
         std::cout << "readiness: ";
@@ -211,7 +212,7 @@ void add(string line) {
         cold->set_readiness(readiness);
 
         list.append(cold);
-    }  else if (std::strcmp(classname, "Lemonade") == 0) {
+    } else if (classname == "Lemonade") {
         int degree_of_taste;
         bool readiness;
 
@@ -229,7 +230,7 @@ void add(string line) {
         lemonade->set_readiness(readiness);
 
         list.append(lemonade);
-    }  else if (std::strcmp(classname, "Water") == 0) {
+    } else if (classname == "Water") {
         int color;
         bool readiness;
 
@@ -248,7 +249,7 @@ void add(string line) {
         water->set_readiness(readiness);
 
         list.append(water);
-    } else if (std::strcmp(classname, "Other") == 0) {
+    } else if (classname == "Other") {
         int degree_of_taste;
 
         std::cout << "degree of taste: ";
@@ -265,7 +266,6 @@ void add(string line) {
     } else {
         std::cout << "Unknown class" << std::endl;
     }
-
 }
 
 
