@@ -6,20 +6,21 @@
 #include "config.h"
 #include "List.h"
 
+#include "Hot.h"
+#include "Coffee.h"
+#include "Tea.h"
+#include "Cold.h"
+#include "Lemonade.h"
+#include "Water.h"
+#include "Other.h"
 
-class CStringComparator {
-public:
-    bool operator()(const char* first, const char* second) const {
-        return std::strcmp(first, second) < 0;
-    }
-};
 
 
-using CmdMap = std::map<const char*, void (*)(const char*), CStringComparator>;
+using CmdMap = std::map<string, void (*)(string)>;
 
 List<Drink> list;
 
-void help(const char* line) {
+void help(string line) {
     std::cout
         << "help -- Prints the Help Message" << std::endl
         << "exit -- Exit" << std::endl
@@ -33,13 +34,13 @@ void help(const char* line) {
 }
 
 
-void exit(const char* line) {
+void exit(string line) {
     std::exit(0);
 }
 
 
-void load(const char* line) {
-    if (!std::strlen(line)) {
+void load(string line) {
+    if (!line.length()) {
         std::cout << "filename is required" << std::endl;
         return;
     }
@@ -54,8 +55,8 @@ void load(const char* line) {
 }
 
 
-void save(const char* line) {
-    if (!std::strlen(line)) {
+void save(string line) {
+    if (!line.length()) {
         std::cout << "filename is required" << std::endl;
         return;
     }
@@ -64,23 +65,23 @@ void save(const char* line) {
 }
 
 
-void print(const char* line) {
+void print(string line) {
     list.print_all();
 }
 
 
-void len(const char* line) {
+void len(string line) {
     std::cout << list.get_length() << std::endl;
 }
 
 
-void remove_object(const char* line) {
-    if (!std::strlen(line)) {
+void remove_object(string line) {
+    if (!line.length()) {
         std::cout << "filename is required" << std::endl;
         return;
     }
 
-    if (std::strcmp(line, "*") == 0) {
+    if (line == "*") {
         list.remove_all();
     } else {
         list.remove(line);
@@ -88,8 +89,8 @@ void remove_object(const char* line) {
 }
 
 
-void search(const char* line) {
-    if (!std::strlen(line)) {
+void search(string line) {
+    if (!line.length()) {
         std::cout << "filename is required" << std::endl;
         return;
     }
@@ -103,75 +104,169 @@ void search(const char* line) {
 }
 
 
-// void add(const char* line) {
-//     Basedrink* drink;
+void add(string line) {
+    int drinking_time;
+    string dishes;
+    string name;
 
-//     char classname[MAX_STRING_LENGTH] = {};
-//     char name[MAX_STRING_LENGTH] = {};
-//     uint16_t level;
-//     uint32_t hp;
-//     uint32_t max_hp;
-//     double gold;
-//     std::cout << "Classname (Summoner, Attacker, Melee, Ranged): ";
-//     std::cin.getline(classname, MAX_STRING_LENGTH);
-//     std::cout << "name: ";
-//     std::cin.getline(name, MAX_STRING_LENGTH);
-//     std::cout << "level: ";
-//     std::cin >> level;
-//     std::cout << "hp: ";
-//     std::cin >> hp;
-//     std::cout << "max_hp: ";
-//     std::cin >> max_hp;
-//     std::cout << "gold: ";
-//     std::cin >> gold;
+    char classname[MAX_STRING_LENGTH] = {};
+    std::cout << "Classname (Drink, Hot, Coffee, Tea, Cold, Lemonade, Water, Other): ";
+    std::cin.getline(classname, MAX_STRING_LENGTH);
+    std::cout << "name: ";
+    std::cin >> name;
+    std::cout << "drinking time: ";
+    std::cin >> drinking_time;
+    std::cout << "dishes: ";
+    std::cin >> dishes;
 
-//     if (std::strcmp(classname, "Attacker") == 0 || std::strcmp(classname, "Summoner") == 0) {
-//         uint32_t mana;
-//         uint32_t max_mana;
-//         std::cout << "mana: ";
-//         std::cin >> mana;
-//         std::cout << "max_mana: ";
-//         std::cin >> max_mana;
+    if(std::strcmp(classname, "Drink") == 0) {
+        Drink* drink = new Drink();
 
-//         if (std::strcmp(classname, "Attacker") == 0) {
-//             char spell[MAX_STRING_LENGTH];
-//             std::cout << "spell: ";
-//             clearcin();
-//             std::cin.getline(spell, MAX_STRING_LENGTH);
+        drink->set_name(name);
+        drink->set_dishes(dishes);
+        drink->set_drinking_time(drinking_time);
 
-//             drink = new Attacker(name, level, hp, max_hp, gold, mana, max_mana, spell);
-//         } else {
-//             char creature[MAX_STRING_LENGTH];
-//             std::cout << "creature: ";
-//             clearcin();
-//             std::cin.getline(creature, MAX_STRING_LENGTH);
+        list.append(drink);
+    } else if (std::strcmp(classname, "Hot") == 0) {
+        int degree_of_taste;
+        bool readiness;
 
-//             drink = new Summoner(name, level, hp, max_hp, gold, mana, max_mana, creature);
-//         }
-//     } else if (std::strcmp(classname, "Melee") == 0 || std::strcmp(classname, "Ranged") == 0) {
-//         uint32_t strength;
-//         std::cout << "strength: ";
-//         std::cin >> strength;
+        std::cout << "degree of taste: ";
+        std::cin >> degree_of_taste;
+        std::cout << "readiness: ";
+        std::cin >> readiness;
 
-//         if (std::strcmp(classname, "Melee") == 0) {
-//             uint16_t attack_speed;
-//             std::cout << "attack_speed: ";
-//             std::cin >> attack_speed;
+        Hot* hot = new Hot();
 
-//             drink = new Melee(name, level, hp, max_hp, gold, strength, attack_speed);
-//         } else {
-//             float accuracy;
-//             std::cout << "accuracy: ";
-//             std::cin >> accuracy;
+        hot->set_name(name);
+        hot->set_dishes(dishes);
+        hot->set_drinking_time(drinking_time);
+        hot->set_degree_of_taste(degree_of_taste);
+        hot->set_readiness(readiness);
 
-//             drink = new Ranged(name, level, hp, max_hp, gold, strength, accuracy);
-//         }
-//         clearcin();
-//     } else {
-//         std::cout << "Unknown class" << std::endl;
-//     }
-//     list.append(drink);
-// }
+        list.append(hot);
+    } else if (std::strcmp(classname, "Coffee") == 0) {
+        string advantages;
+        bool is_cooking_method_traditional;
+        int degree_of_taste;
+        bool readiness;
+
+        std::cout << "degree of taste: ";
+        std::cin >> degree_of_taste;
+        std::cout << "readiness: ";
+        std::cin >> readiness;
+        std::cout << "advantages: ";
+        std::cin >> advantages;
+        std::cout << "is cooking method traditional: ";
+        std::cin >> is_cooking_method_traditional;
+
+        Coffee* coffee = new Coffee();
+
+        coffee->set_name(name);
+        coffee->set_dishes(dishes);
+        coffee->set_drinking_time(drinking_time);
+        coffee->set_degree_of_taste(degree_of_taste);
+        coffee->set_readiness(readiness);
+        coffee->set_advantages(advantages);
+        coffee->set_is_cooking_method_traditional(is_cooking_method_traditional);
+
+        list.append(coffee);
+    } else if (std::strcmp(classname, "Tea") == 0) {
+        int degree_of_taste;
+        bool readiness;
+        string advantages;
+        bool is_cooking_method_traditional;
+
+        std::cout << "degree of taste: ";
+        std::cin >> degree_of_taste;
+        std::cout << "readiness: ";
+        std::cin >> readiness;
+        std::cout << "advantages: ";
+        std::cin >> advantages;
+        std::cout << "is cooking method traditional: ";
+        std::cin >> is_cooking_method_traditional;
+
+        Tea* tea = new Tea();
+
+        tea->set_name(name);
+        tea->set_dishes(dishes);
+        tea->set_drinking_time(drinking_time);
+        tea->set_degree_of_taste(degree_of_taste);
+        tea->set_readiness(readiness);
+        tea->set_advantages(advantages);
+        tea->set_is_cooking_method_traditional(is_cooking_method_traditional);
+
+        list.append(tea);
+    } else if (std::strcmp(classname, "Cold") == 0) {
+        bool readiness;
+
+        std::cout << "readiness: ";
+        std::cin >> readiness;
+
+        Cold* cold = new Cold();
+
+        cold->set_name(name);
+        cold->set_dishes(dishes);
+        cold->set_drinking_time(drinking_time);
+        cold->set_readiness(readiness);
+
+        list.append(cold);
+    }  else if (std::strcmp(classname, "Lemonade") == 0) {
+        int degree_of_taste;
+        bool readiness;
+
+        std::cout << "degree of taste: ";
+        std::cin >> degree_of_taste;
+        std::cout << "readiness: ";
+        std::cin >> readiness;
+
+        Lemonade* lemonade = new Lemonade();
+
+        lemonade->set_name(name);
+        lemonade->set_dishes(dishes);
+        lemonade->set_drinking_time(drinking_time);
+        lemonade->set_degree_of_taste(degree_of_taste);
+        lemonade->set_readiness(readiness);
+
+        list.append(lemonade);
+    }  else if (std::strcmp(classname, "Water") == 0) {
+        int color;
+        bool readiness;
+
+        std::cout << "color: ";
+        std::cin >> color;
+        std::cout << "readiness: ";
+        std::cin >> readiness;
+
+
+        Water* water = new Water();
+
+        water->set_name(name);
+        water->set_dishes(dishes);
+        water->set_drinking_time(drinking_time);
+        water->set_color(color);
+        water->set_readiness(readiness);
+
+        list.append(water);
+    } else if (std::strcmp(classname, "Other") == 0) {
+        int degree_of_taste;
+
+        std::cout << "degree of taste: ";
+        std::cin >> degree_of_taste;
+
+        Other* other = new Other();
+
+        other->set_name(name);
+        other->set_dishes(dishes);
+        other->set_drinking_time(drinking_time);
+        other->set_degree_of_taste(degree_of_taste);
+
+        list.append(other);
+    } else {
+        std::cout << "Unknown class" << std::endl;
+    }
+
+}
 
 
 void run_menu() {
@@ -181,10 +276,10 @@ void run_menu() {
     commands["print"] = print;
     commands["load"] = load;
     commands["save"] = save;
-    // commands["remove"] = remove_object;
-    // commands["search"] = search;
-    // commands["add"] = add;
-    // commands["len"] = len;
+    commands["remove"] = remove_object;
+    commands["search"] = search;
+    commands["add"] = add;
+    commands["len"] = len;
     std::cout << "Type `help` to get help" << std::endl;
 
     while (true) {
@@ -193,7 +288,7 @@ void run_menu() {
         std::cin.getline(prompt, MAX_STRING_LENGTH);
 
         if (std::cin.fail()) {
-            std::cout << "ERROR!";
+            std::cout << "ERROR!" << std::endl;
             break;
         }
 
@@ -203,8 +298,8 @@ void run_menu() {
 
         char prompt_copy[MAX_STRING_LENGTH];
         std::strcpy(prompt_copy, prompt);
-        const char* command = std::strtok(prompt_copy, word_sep);
-        const char* line = prompt_copy + std::strlen(command) + 1;
+        string command = std::strtok(prompt_copy, word_sep);
+        string line = prompt_copy + command.length() + 1;
 
         if (commands.find(command) == commands.end()) {
             std::system(prompt);

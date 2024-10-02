@@ -5,6 +5,16 @@
 
 using namespace std;
 
+Hot::Hot(): Drink() {
+    classname = HOT;
+
+    set_name("hot");
+    set_dishes("good");
+    set_drinking_time(60);
+    set_degree_of_taste(9);
+    set_readiness(0);
+}
+
 void Hot::set_degree_of_taste(int degree_of_taste)
 {
     this->degree_of_taste = degree_of_taste;
@@ -37,4 +47,11 @@ void Hot::load(std::ifstream &fin)
     Drink::load(fin);
     fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(degree_of_taste));
     fin.read(reinterpret_cast<char *>(&readiness), sizeof(readiness));
+}
+
+void Hot::print(std::ostream& ostream) const {
+    Drink::print(ostream);
+    ostream << "subtype Hot" << std::endl
+    << "    degree of taste=" << degree_of_taste << std::endl
+    << "    ,readiness=" << readiness << std::endl;
 }

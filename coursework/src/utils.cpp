@@ -15,7 +15,7 @@
 #include "Other.h"
 
 
-Drink* read_from_file_smart(const char* filename, size_t& offset) {
+Drink* read_from_file_smart(string filename, size_t& offset) {
     /*
         Note! This function doesn't free memory;
     */

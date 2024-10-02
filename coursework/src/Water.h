@@ -11,6 +11,8 @@ private:
     int color;
 
 public:
+    Water();
+
     void set_color(int color);
 
     int get_color();
@@ -18,6 +20,8 @@ public:
     void save(std::ofstream &);
 
     void load(std::ifstream &);
+
+    void print(std::ostream& ostream) const;
 };
 
 #endif // WATER_H_INCLUDED

@@ -10,7 +10,7 @@ run: build
 
 build: clean
 	mkdir -p ${DISTRIBUTION_FOLDER}
-	$(CXX) -o ${DISTRIBUTION_FOLDER}/${TARGET} ${SOURCE_FOLDER}/*.c
+	$(CXX) -o ${DISTRIBUTION_FOLDER}/${TARGET} ${SOURCE_FOLDER}/*.cpp
 
 clean:
 	rm -rf ${DISTRIBUTION_FOLDER}/

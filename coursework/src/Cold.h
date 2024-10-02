@@ -13,6 +13,8 @@ private:
     bool readiness;
 
 public:
+    Cold();
+
     void set_readiness(bool readiness);
 
     bool get_readiness();
@@ -20,6 +22,8 @@ public:
     void save(std::ofstream&);
 
     void load(std::ifstream&);
+
+    void print(std::ostream& ostream) const;
 };
 
 #endif

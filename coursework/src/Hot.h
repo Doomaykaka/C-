@@ -14,6 +14,8 @@ private:
     bool readiness;
 
 public:
+    Hot();
+
     void set_degree_of_taste(int degree_of_taste);
 
     int get_degree_of_taste();
@@ -25,6 +27,8 @@ public:
     void save(std::ofstream &);
 
     void load(std::ifstream &);
+
+    void print(std::ostream& ostream) const;
 };
 
 #endif

@@ -2,5 +2,5 @@
 #include "config.h"
 
 
-Drink* read_from_file_smart(const char*, size_t&);
+Drink* read_from_file_smart(string, size_t&);
 void clearcin();

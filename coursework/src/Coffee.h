@@ -12,6 +12,8 @@ private:
     bool is_cooking_method_traditional;
 
 public:
+    Coffee();
+
     void set_advantages(string advantages_repr);
 
     string get_advantages();
@@ -23,6 +25,8 @@ public:
     void save(std::ofstream&);
 
     void load(std::ifstream&);
+
+    void print(std::ostream& ostream) const;
 };
 
 #endif

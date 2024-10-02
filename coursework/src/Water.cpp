@@ -6,6 +6,17 @@
 
 using namespace std;
 
+Water::Water() : Cold()
+{
+     classname = WATER;
+
+     set_name("water");
+     set_dishes("none");
+     set_drinking_time(1);
+     set_color(0);
+     set_readiness(1);
+}
+
 void Water::set_color(int color)
 {
      this->color = color;
@@ -25,5 +36,12 @@ void Water::save(std::ofstream &fout)
 void Water::load(std::ifstream &fin)
 {
      Cold::load(fin);
-     fin.read(reinterpret_cast<char *>(&advantages), sizeof(advantages));
+     fin.read(reinterpret_cast<char *>(&color), sizeof(color));
+}
+
+void Water::print(std::ostream &ostream) const
+{
+     Cold::print(ostream);
+     ostream << "subtype Water" << std::endl
+             << "   color=" << color << std::endl;
 }

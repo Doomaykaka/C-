@@ -1,3 +1,6 @@
+#ifndef LIST_H_INCLUDED
+#define LIST_H_INCLUDED
+
 #include <iostream>
 #include <cstring>
 
@@ -57,7 +60,7 @@ public:
         }
     }
 
-    void save_all(const char *filename)
+    void save_all(string filename)
     {
         std::ofstream fout(filename, std::ios::binary);
         for (Node<T> *node = head; node != nullptr; node = node->get_next())
@@ -68,7 +71,7 @@ public:
         fout.close();
     }
 
-    void load_from(const char *filename)
+    void load_from(string filename)
     {
         size_t offset = 0;
         while (true)
@@ -82,12 +85,12 @@ public:
         }
     }
 
-    T *search(const char *name)
+    T *search(string name)
     {
         for (Node<T> *node = head; node != nullptr; node = node->get_next())
         {
             T *drink = node->get_value();
-            if (std::strcmp(name, drink->get_name()) == 0)
+            if (name == drink->get_name())
             {
                 return drink;
             }
@@ -95,7 +98,7 @@ public:
         return nullptr;
     }
 
-    void remove(const char *name, size_t count = 0)
+    void remove(string name, size_t count = 0)
     {
         size_t deleted = 0;
 
@@ -108,7 +111,7 @@ public:
             Node<T> *next = node->get_next();
 
             T *value = next->get_value();
-            if (std::strcmp(value->get_name(), name) == 0)
+            if (value->get_name() == name)
             {
                 if (node == &prehead)
                 {
@@ -146,3 +149,5 @@ public:
         }
     }
 };
+
+#endif
