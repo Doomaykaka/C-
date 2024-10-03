@@ -34,6 +34,16 @@ public:
 
     void load(std::ifstream &);
 
+    template <typename T>
+    void save_primitive_type(std::ofstream& fout, T& obj);
+
+    template <typename T>
+    T load_primitive_type(std::ifstream& fin);
+
+    std::string load_sized_string(std::ifstream&);
+
+    void save_sized_string(std::ofstream&, std::string&);
+
     virtual void print(std::ostream& ostream) const;
 
     friend std::ostream& operator<<(std::ostream&, const Drink&);

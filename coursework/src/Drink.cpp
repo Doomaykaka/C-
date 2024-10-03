@@ -48,40 +48,54 @@ void Drink::set_name(string name)
 
 void Drink::save(std::ofstream &fout)
 {
-    size_t dishes_str_size = dishes.size();
-    const char* dishes_c_str = dishes.c_str();
-
-    size_t name_str_size = name.size();
-    const char* name_c_str = name.c_str();
-
-    fout.write(reinterpret_cast<char *>(&classname), sizeof(ClassName));
-    fout.write(reinterpret_cast<char *>(&drinking_time), sizeof(int));
-    fout.write(reinterpret_cast<char *>(&dishes_str_size), sizeof(size_t));
-    fout.write(const_cast<char *>(dishes_c_str), dishes_str_size);
-    fout.write(reinterpret_cast<char *>(&name_str_size), sizeof(size_t));
-    fout.write(const_cast<char *>(name_c_str), name_str_size);
+    this->save_primitive_type(fout, classname);
+    this->save_primitive_type(fout, drinking_time);
+    this->save_sized_string(fout, dishes);
+    this->save_sized_string(fout, name);
 }
 
 void Drink::load(std::ifstream &fin)
 {
-    size_t dishes_str_size = 0;
+    classname = this->load_primitive_type<ClassName>(fin);
+    drinking_time = this->load_primitive_type<int>(fin);
+    dishes = this->load_sized_string(fin);
+    name = this->load_sized_string(fin);
+}
 
-    size_t name_str_size = 0;
+template <typename T>
+void Drink::save_primitive_type(std::ofstream& fout, T& obj) {
+    fout.write(reinterpret_cast<char *>(&obj), sizeof(T));
+}
 
-    fin.read(reinterpret_cast<char *>(&classname), sizeof(ClassName));
-    fin.read(reinterpret_cast<char *>(&drinking_time), sizeof(int));
+template <typename T>
+T Drink::load_primitive_type(std::ifstream& fin) {
+    T result;
+    fin.read(reinterpret_cast<char *>(&result), sizeof(T));
 
-    fin.read(reinterpret_cast<char *>(&dishes_str_size), sizeof(size_t));
-    const char* dishes_c_str = new char[dishes_str_size];
-    fin.read(const_cast<char *>(dishes_c_str), dishes_str_size);
-    dishes = string(dishes_c_str);
-    delete[] dishes_c_str;
+    return result;
+}
 
-    fin.read(reinterpret_cast<char *>(&name_str_size), sizeof(size_t));
-    const char* name_c_str = new char[name_str_size];
-    fin.read(const_cast<char *>(name_c_str), name_str_size);
-    name = string(name_c_str);
-    delete[] name_c_str;
+std::string Drink::load_sized_string(std::ifstream& fin) {
+    size_t string_size;
+    fin.read(reinterpret_cast<char *>(&string_size), sizeof(size_t));
+
+    char* string_buffer = new char[string_size + 1];
+    string_buffer[string_size] = '\0';
+
+    fin.read(string_buffer, string_size);
+
+    std::string result = string(string_buffer);
+
+    delete[] string_buffer;
+
+    return result;
+}
+
+void Drink::save_sized_string(std::ofstream& fout, std::string& str) {
+    size_t string_size = str.size();
+
+    fout.write(reinterpret_cast<char *>(&string_size), sizeof(size_t));
+    fout.write(const_cast<char *>(str.c_str()), string_size);
 }
 
 void Drink::print(std::ostream &ostream) const
