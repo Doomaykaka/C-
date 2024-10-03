@@ -27,12 +27,6 @@ public:
     void load(std::ifstream&);
 
     void print(std::ostream& ostream) const;
-
-    template <typename T>
-    void save_primitive_type(std::ofstream& fout, T& obj);
-
-    template <typename T>
-    T load_primitive_type(std::ifstream& fin);
 };
 
 #endif

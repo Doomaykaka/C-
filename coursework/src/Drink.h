@@ -35,16 +35,22 @@ public:
     void load(std::ifstream &);
 
     template <typename T>
-    void save_primitive_type(std::ofstream& fout, T& obj);
+    void save_primitive_type(std::ofstream& fout, T& obj) {
+        fout.write(reinterpret_cast<char *>(&obj), sizeof(T));
+    }
 
     template <typename T>
-    T load_primitive_type(std::ifstream& fin);
+    T load_primitive_type(std::ifstream& fin) {
+        T result;
+        fin.read(reinterpret_cast<char *>(&result), sizeof(T));
+        return result;
+    }
 
     std::string load_sized_string(std::ifstream&);
 
     void save_sized_string(std::ofstream&, std::string&);
 
-    void print(std::ostream& ostream) const;
+    virtual void print(std::ostream& ostream) const;
 
     friend std::ostream& operator<<(std::ostream&, const Drink&);
 
