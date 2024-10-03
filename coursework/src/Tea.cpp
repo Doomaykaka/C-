@@ -43,27 +43,16 @@ void Tea::save(std::ofstream &fout)
 {
   Hot::save(fout);
 
-  size_t advantages_str_size = advantages.size();
-  const char *advantages_c_str = advantages.c_str();
-
-  fout.write(reinterpret_cast<char *>(&advantages_str_size), sizeof(size_t));
-  fout.write(const_cast<char *>(advantages_c_str), advantages_str_size);
-  fout.write(reinterpret_cast<char *>(&is_cooking_method_traditional), sizeof(bool));
+  this->save_sized_string(fout, advantages);
+  this->save_primitive_type<bool>(fout, is_cooking_method_traditional);
 }
 
 void Tea::load(std::ifstream &fin)
 {
   Hot::load(fin);
 
-  size_t advantages_str_size = 0;
-
-  fin.read(reinterpret_cast<char *>(&advantages_str_size), sizeof(size_t));
-  const char *advantages_c_str = new char[advantages_str_size];
-  fin.read(const_cast<char *>(advantages_c_str), advantages_str_size);
-  advantages = string(advantages_c_str);
-  delete[] advantages_c_str;
-
-  fin.read(reinterpret_cast<char *>(&is_cooking_method_traditional), sizeof(bool));
+  advantages = this->load_sized_string(fin);
+  is_cooking_method_traditional = this->load_primitive_type<bool>(fin);
 }
 
 void Tea::print(std::ostream &ostream) const

@@ -56,10 +56,10 @@ void Drink::save(std::ofstream &fout)
 
 void Drink::load(std::ifstream &fin)
 {
-    classname = this->load_primitive_type<ClassName>(fin);
-    drinking_time = this->load_primitive_type<int>(fin);
-    dishes = this->load_sized_string(fin);
-    name = this->load_sized_string(fin);
+    this->classname = this->load_primitive_type<ClassName>(fin);
+    this->drinking_time = this->load_primitive_type<int>(fin);
+    this->dishes = this->load_sized_string(fin);
+    this->name = this->load_sized_string(fin);
 }
 
 template <typename T>

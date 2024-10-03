@@ -30,13 +30,13 @@ int Water::get_color()
 void Water::save(std::ofstream &fout)
 {
      Cold::save(fout);
-     fout.write(reinterpret_cast<char *>(&color), sizeof(int));
+     this->save_primitive_type(fout, color);
 }
 
 void Water::load(std::ifstream &fin)
 {
      Cold::load(fin);
-     fin.read(reinterpret_cast<char *>(&color), sizeof(int));
+     this->color = this->load_primitive_type<int>(fin);
 }
 
 void Water::print(std::ostream &ostream) const

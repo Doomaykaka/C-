@@ -44,7 +44,7 @@ public:
 
     void save_sized_string(std::ofstream&, std::string&);
 
-    virtual void print(std::ostream& ostream) const;
+    void print(std::ostream& ostream) const;
 
     friend std::ostream& operator<<(std::ostream&, const Drink&);
 
