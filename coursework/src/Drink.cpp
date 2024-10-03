@@ -71,7 +71,6 @@ template <typename T>
 T Drink::load_primitive_type(std::ifstream& fin) {
     T result;
     fin.read(reinterpret_cast<char *>(&result), sizeof(T));
-
     return result;
 }
 
@@ -79,15 +78,17 @@ std::string Drink::load_sized_string(std::ifstream& fin) {
     size_t string_size;
     fin.read(reinterpret_cast<char *>(&string_size), sizeof(size_t));
 
+    if (fin.tellg() < 0) {
+        return std::string("");
+    }
+
     char* string_buffer = new char[string_size + 1];
     string_buffer[string_size] = '\0';
-
     fin.read(string_buffer, string_size);
 
     std::string result = string(string_buffer);
 
     delete[] string_buffer;
-
     return result;
 }
 
