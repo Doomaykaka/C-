@@ -40,7 +40,7 @@ bool Coffee::get_is_cooking_method_traditional()
 void Coffee::save(std::ofstream& fout) {
     Hot::save(fout);
 
-    size_t advantages_str_size = advantages.size() - 1;
+    size_t advantages_str_size = advantages.size();
     const char* advantages_c_str = advantages.c_str();
 
     fout.write(reinterpret_cast<char*>(&advantages_str_size), sizeof(size_t));

@@ -48,10 +48,10 @@ void Drink::set_name(string name)
 
 void Drink::save(std::ofstream &fout)
 {
-    size_t dishes_str_size = dishes.size() - 1;
+    size_t dishes_str_size = dishes.size();
     const char* dishes_c_str = dishes.c_str();
 
-    size_t name_str_size = name.size() - 1;
+    size_t name_str_size = name.size();
     const char* name_c_str = name.c_str();
 
     fout.write(reinterpret_cast<char *>(&classname), sizeof(ClassName));

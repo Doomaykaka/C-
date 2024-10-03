@@ -72,3 +72,71 @@ Drink* read_from_file_smart(string filename, size_t& offset) {
 void clearcin() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
+
+bool is_bool_string(string* line)
+{
+    string value = *line;
+
+    for (int i = 0; i < value.length(); i++)
+    {
+        if (value[i] != '1' && value[i] != '0')
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool is_int_string(string* line)
+{
+    string value = *line;
+
+    for (int i = 0; i < value.length(); i++)
+    {
+        if (!isdigit(value[i]) && value[i] != '-')
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void read_line(string* line)
+{
+    while (!std::getline(std::cin, *line) || line->empty())
+    {
+        ;
+    }
+}
+
+void read_int(int* var)
+{
+    string int_repr;
+
+    read_line(&int_repr);
+
+    while (!is_int_string(&int_repr))
+    {
+        std::cout << "bad integer, repeat please" << std::endl;
+        read_line(&int_repr);
+    }
+
+    *var = std::stoi(int_repr);
+}
+
+void read_bool(bool* var)
+{
+    string bool_repr;
+
+    read_line(&bool_repr);
+
+    while (!is_bool_string(&bool_repr))
+    {
+        std::cout << "bad boolean, repeat please" << std::endl;
+        read_line(&bool_repr);
+    }
+
+    *var = std::stoi(bool_repr);
+}
