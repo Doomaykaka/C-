@@ -38,15 +38,15 @@ bool Hot::get_readiness()
 void Hot::save(std::ofstream &fout)
 {
     Drink::save(fout);
-    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
-    fout.write(reinterpret_cast<char *>(&readiness), sizeof(bool));
+    this->save_primitive_type(fout, degree_of_taste);
+    this->save_primitive_type(fout, readiness);
 }
 
 void Hot::load(std::ifstream &fin)
 {
     Drink::load(fin);
-    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
-    fin.read(reinterpret_cast<char *>(&readiness), sizeof(bool));
+    this->degree_of_taste = this->load_primitive_type<bool>(fin);
+    this->readiness = this->load_primitive_type<int>(fin);
 }
 
 void Hot::print(std::ostream& ostream) const {

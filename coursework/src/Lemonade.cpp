@@ -29,13 +29,13 @@ int Lemonade::get_degree_of_taste()
 void Lemonade::save(std::ofstream &fout)
 {
     Cold::save(fout);
-    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
+    this->save_primitive_type(fout, degree_of_taste);
 }
 
 void Lemonade::load(std::ifstream &fin)
 {
     Cold::load(fin);
-    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
+    this->degree_of_taste = this->load_primitive_type<int>(fin);
 }
 
 void Lemonade::print(std::ostream& ostream) const {

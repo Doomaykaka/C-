@@ -27,13 +27,13 @@ bool Cold::get_readiness()
 
 void Cold::save(std::ofstream& fout) {
     Drink::save(fout);
-    fout.write(reinterpret_cast<char*>(&readiness), sizeof(bool));
+    this->save_primitive_type(fout, this->readiness);
 }
 
 
 void Cold::load(std::ifstream& fin) {
     Drink::load(fin);
-    fin.read(reinterpret_cast<char*>(&readiness), sizeof(bool));
+    this->readiness = this->load_primitive_type<bool>(fin);
 }
 
 void Cold::print(std::ostream& ostream) const {

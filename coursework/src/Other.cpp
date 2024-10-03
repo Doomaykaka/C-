@@ -28,13 +28,13 @@ int Other::get_degree_of_taste()
 void Other::save(std::ofstream &fout)
 {
     Drink::save(fout);
-    fout.write(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
+    this->save_primitive_type(fout, degree_of_taste);
 }
 
 void Other::load(std::ifstream &fin)
 {
     Drink::load(fin);
-    fin.read(reinterpret_cast<char *>(&degree_of_taste), sizeof(int));
+    degree_of_taste = this->load_primitive_type<int>(fin);
 }
 
 void Other::print(std::ostream& ostream) const {

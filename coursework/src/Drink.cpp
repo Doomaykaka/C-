@@ -56,22 +56,10 @@ void Drink::save(std::ofstream &fout)
 
 void Drink::load(std::ifstream &fin)
 {
-    classname = this->load_primitive_type<ClassName>(fin);
-    drinking_time = this->load_primitive_type<int>(fin);
-    dishes = this->load_sized_string(fin);
-    name = this->load_sized_string(fin);
-}
-
-template <typename T>
-void Drink::save_primitive_type(std::ofstream& fout, T& obj) {
-    fout.write(reinterpret_cast<char *>(&obj), sizeof(T));
-}
-
-template <typename T>
-T Drink::load_primitive_type(std::ifstream& fin) {
-    T result;
-    fin.read(reinterpret_cast<char *>(&result), sizeof(T));
-    return result;
+    this->classname = this->load_primitive_type<ClassName>(fin);
+    this->drinking_time = this->load_primitive_type<int>(fin);
+    this->dishes = this->load_sized_string(fin);
+    this->name = this->load_sized_string(fin);
 }
 
 std::string Drink::load_sized_string(std::ifstream& fin) {
